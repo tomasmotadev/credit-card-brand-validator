@@ -1,7 +1,44 @@
-Este código fornece uma forma de identificar a "bandeira" (marca ou rede) de um cartão de crédito e de validar o número do cartão utilizando o algoritmo de Luhn. Começa por definir um conjunto de expressões regulares (regexBandeiras) para cada marca de cartão suportada, como Visa, MasterCard, American Express, entre outras. Cada expressão regular corresponde aos padrões numéricos e comprimentos específicos associados a essa marca. Por exemplo, os cartões Visa devem começar por 4 e ter 16 dígitos, enquanto os American Express começam por 34 ou 37 e têm 15 dígitos.
+# 💳 Credit Card Brand Validator
 
-A função getCardBandeira recebe um número de cartão, remove quaisquer caracteres que não sejam dígitos, e depois verifica o número limpo contra cada expressão regular em regexBandeiras. Devolve o nome da primeira marca que corresponder ou "Bandeira desconhecida" se nenhuma corresponder. Esta abordagem facilita a adição de novas marcas, bastando acrescentar novos padrões ao objeto regexBandeiras.
+This project provides an efficient way to **identify the brand (network)** of credit cards and **validate their numbers** using the **Luhn Algorithm**, which is widely used in payment systems.
 
-A função validateCreditCard implementa o algoritmo de Luhn, que é uma fórmula de verificação bastante comum usada para validar números de cartões de crédito. Primeiro, remove quaisquer caracteres que não sejam dígitos e verifica se a cadeia resultante tem entre 13 e 19 dígitos. Depois, processa os dígitos da direita para a esquerda, duplicando todos os segundos dígitos e subtraindo 9 se o resultado for superior a 9. A soma de todos os dígitos é então verificada: se for divisível por 10, o número do cartão é considerado válido.
+---
 
-Por fim, o código apresenta uma lista de números de cartão de exemplo e itera sobre eles, imprimindo o número de cada cartão, a marca detetada e o resultado da validação. Isto demonstra como as duas funções principais trabalham em conjunto para identificar e validar diferentes tipos de cartões. Esta estrutura é modular e fácil de manter, sendo adequada para aplicações que necessitam de processar ou validar informações de cartões de crédito.
+## 🧩 Features
+
+- 🔍 Automatically detects the card brand based on the number.
+- ✅ Validates card numbers using the Luhn Algorithm.
+- 🔄 Supports multiple brands (Visa, MasterCard, Amex, etc).
+- 🧱 Modular and easy-to-maintain structure.
+- 📦 Simple to extend with additional card brands.
+
+---
+
+## 🛠️ Technologies Used
+
+- **JavaScript**
+- Regular Expressions (Regex)
+- Luhn Algorithm (for card validation)
+
+---
+
+## 🚀 How It Works
+
+### 🔹 Brand Detection
+
+The `getCardBandeira(cardNumber)` function:
+
+1. Removes all non-numeric characters.
+2. Compares the cleaned number against specific regular expressions for each card brand.
+3. Returns the first matching brand or `"Unknown Brand"` if no match is found.
+
+Example of the `regexBandeiras` object:
+
+```js
+const regexBandeiras = {
+  Visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+  MasterCard: /^5[1-5][0-9]{14}$/,
+  Amex: /^3[47][0-9]{13}$/,
+  Discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+  // Additional brands can be added here
+};
