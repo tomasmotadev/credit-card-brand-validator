@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="https://tomasmotadev.github.io/profile.jpg" type="image/jpg" />
+<title>Credit Card Validator - Tomás Mota</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Custom base palette (white, gray, black, red, blue, yellow) */
+:root {
+--c-white: #ffffff;
+--c-white2: #cfcfcf;
+--c-black: #0b0b0b;
+--c-gray: #2b2f36;
+--c-gray-2: #3a3f46;
+--c-red: #ff3b3b;
+--c-blue: #1a73ff;
+--c-yellow: #ffd43b;
+}
+body {
+text-align: center;
+background: var(--c-black);
+color: var(--c-white);
+}
+/* "Hero" background similar to the submitted image */
+.hero-wrap {
+background: radial-gradient(1200px 600px at 10% 10%, rgba(26, 115, 255, 0.12), transparent 60%),
+radial-gradient(900px 500px at 90% 80%, rgba(255, 59, 59, 0.12), transparent 60%),
+linear-gradient(180deg, #0f1620 0%, #0c121a 100%);
+color: var(--c-white);
+box-shadow: 0 20px 40px rgba(0, 0, 0, .35);
+}
+#herop {
+color: var(--c-white2);
+}
+/* Tech chips with slightly rounded corners */
+.tech-chip {
+border-radius: 999px;
+font-weight: 600;
+padding: .6rem 1rem;
+background: var(--c-gray);
+color: var(--c-white);
+}
+/* Soft shadow and standard rounded border */
+.card {
+border-radius: 1rem;
+box-shadow: 0 12px 30px rgba(0, 0, 0, .10);
+background: var(--c-gray-2);
+color: var(--c-white);
+}
+/* Primary buttons */
+.btn {
+border-radius: .8rem;
+font-weight: 600;
+transition: transform .15s ease, box-shadow .15s ease;
+background: var(--c-blue);
+color: var(--c-white);
+}
+.btn:active {
+transform: translateY(1px);
+}
+  
+/* REMOVED: The global timeline rule. */
+/* ADDED: The rule within a media query for the 'md' breakpoint */
+@media (min-width: 768px) {
+  .timeline:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, var(--c-red), var(--c-blue));
+    border-radius: 999px;
+  }
+}
+/* Certificates carousel - hide scrollbar */
+#cert-track {
+scrollbar-width: none;
+}
+#cert-track::-webkit-scrollbar {
+display: none;
+}
+/* Header adjusted for dark theme */
+header {
+background: var(--c-gray-2);
+color: var(--c-white);
+}
+header a {
+color: var(--c-white);
+}
+header a:hover {
+color: var(--c-white);
+}
+/* Mobile menu adjusted for dark theme */
+#mobile-menu {
+background: var(--c-gray-2);
+color: var(--c-white);
+}
+#mobile-menu a {
+color: var(--c-white);
+}
+/* Projects, certificates, photography, and music adjusted for dark theme */
+.card {
+  background: var(--c-gray-2);
+  color: var(--c-white);
+}
+
+.card img {
+  filter: brightness(0.8);
+}
+
+.card h3 {
+  color: var(--c-white);
+}
+
+/* Change here: text color for certificates description */
+#certificados .card p {
+  color: var(--c-white);
+}
+
+/* Professional experience adjusted for dark theme */
+#cv {
+background: var(--c-gray-2);
+}
+#cv p {
+color: var(--c-white2);
+}
+#cv h3 {
+color: var(--c-white);
+}
+/* Footer adjusted for dark theme */
+footer {
+color: var(--c-gray);
+}
+
+  /* Dropdown menu styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--c-gray-2);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.dropdown-content a {
+    color: var(--c-white);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--c-gray);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Mobile Dropdown */
+.mobile-dropdown-btn {
+    display: block;
+    cursor: pointer;
+}
+
+.mobile-dropdown-content {
+    display: none;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+}
+
+.mobile-dropdown-content a {
+    padding: 8px 0;
+}
+
+/*Slideshow @ Photography*/
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  padding-top: 66.66%; /* To maintain a 3:2 aspect ratio, for example */
+  overflow: hidden;
+  border-radius: 1rem; /* Rounded card border */
+  margin-bottom: 12px; /* Space below the image */
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Specific styles for the calculator */
+.validator-container {
+  background-color: var(--c-gray-2);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  max-width: 700px;
+  margin: 40px auto;
+}
+.validator-container h1 {
+  color: var(--c-white);
+  margin-bottom: 20px;
+}
+#validator-form div {
+  margin-bottom: 1rem;
+}
+#validator-form label {
+  font-size: 18px;
+  color: var(--c-white2);
+  display: block;
+  margin-bottom: 10px;
+}
+#validator-form input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--c-gray);
+  background-color: var(--c-gray);
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--c-white);
+}
+#validator-form button {
+  background-color: var(--c-blue);
+  color: var(--c-white);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#validator-form button:hover {
+  background-color: #0056b3;
+}
+.result-box {
+  background-color: var(--c-gray);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  text-align: left;
+}
+.result-box p {
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
+<body>
+
+    <header class="flex justify-between items-center px-6 py-4 shadow-md bg-[var(--c-gray-2)] sticky top-0 z-50">
+        <a href="https://tomasmotadev.github.io" class="flex items-center space-x-3">
+            <img src="https://tomasmotadev.github.io/profile.jpg" alt="Logo" class="w-10 h-10 rounded-full">
+            <span class="font-bold text-xl">Tomás Mota</span>
+        </a>
+         <nav class="hidden md:flex space-x-3">
+            <a href="https://tomasmotadev.github.io/projects" class="px-4 py-2 bg-gray-500 rounded-lg hover:bg-white-500 hover:text-black transition">Dev Projects</a>             
+            <a href="https://tomasmotadev.github.io/cv" class="px-4 py-2 bg-gray-500 rounded-lg hover:bg-white-500 hover:text-black transition">CV</a>
+            <a href="https://tomasmotadev.github.io/about" class="px-4 py-2 bg-gray-500 rounded-lg hover:bg-white-500 hover:text-black transition">About</a>
+
+           <div class="dropdown">
+                <button class="px-4 py-2 bg-gray-500 rounded-lg hover:bg-white-500 hover:text-black transition">Photography</button>
+                <div class="dropdown-content">
+                    <a href="https://tomasmotadev.github.io/photography/category/sport">Sport</a>
+                    <a href="https://tomasmotadev.github.io/photography/category/music">Music</a>
+                    <a href="https://tomasmotadev.github.io/photography/category/casual">Casual</a>
+                </div>
+            </div>
+           
+            <div class="dropdown">
+                <button class="px-4 py-2 bg-gray-500 rounded-lg hover:bg-white-500 hover:text-black transition">Contact</button>
+                <div class="dropdown-content">
+                    <a href="https://tomasmotadev.github.io/github">GitHub</a>
+                    <a href="https://tomasmotadev.github.io/linkedin">LinkedIn</a>
+                    <a href="mailto:tomasmotadev@proton.me">Email</a>
+                </div>
+            </div>
+        </nav>
+      
+        <div class="md:hidden">
+            <button id="menu-btn" class="focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </header>
+    <div id="mobile-menu" class="hidden flex-col space-y-2 p-4 bg-white shadow-md md:hidden">
+        <a href="https://tomasmotadev.github.io/projects" class="block px-4 py-2 bg-gray-500 rounded-lg">Dev Projects</a>       
+        <a href="https://tomasmotadev.github.io/cv" class="block px-4 py-2 bg-gray-500 rounded-lg">CV</a>
+        <a href="https://tomasmotadev.github.io/about" class="block px-4 py-2 bg-gray-500 rounded-lg">About</a>
+
+        <div class="flex flex-col">
+            <span id="mobile-photography-btn" class="mobile-dropdown-btn px-4 py-2 bg-gray-500 rounded-lg">Photography</span>
+            <div id="mobile-photography-menu" class="mobile-dropdown-content">
+                <a href="https://tomasmotadev.github.io/photography/category/sport">Sport</a>
+                <a href="https://tomasmotadev.github.io/photography/category/music" class="block px-4 py-2">Music</a>
+                <a href="https://tomasmotadev.github.io/photography/category/casual" class="block px-4 py-2">Casual</a>
+            </div>
+        </div>
+      
+        <div class="flex flex-col">
+            <span id="mobile-contact-btn" class="mobile-dropdown-btn px-4 py-2 bg-gray-500 rounded-lg">Contact</span>
+            <div id="mobile-contact-menu" class="mobile-dropdown-content">
+                <a href="https://tomasmotadev.github.io/github" class="block px-4 py-2">GitHub</a>
+                <a href="https://tomasmotadev.github.io/linkedin" class="block px-4 py-2">LinkedIn</a>
+                <a href="mailto:tomasmotadev@proton.me" class="block px-4 py-2">Email * tomasmotadev@proton.me</a>
+            </div>
+        </div>
+    </div>
+  
+<main>
+  
+<section id="card-validator" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="validator-container card p-8 md:p-12 rounded-2xl">
+        <h1>Credit Card Validator</h1>
+        <p class="mb-4">Enter a credit card number to check its brand and validity.</p>
+        
+        <form id="validator-form" onsubmit="event.preventDefault(); validateAndDisplay();">
+            <div>
+                <label for="cardNumber">Card Number:</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+            </div>
+            <button type="submit">Check Card</button>
+        </form>
+
+        <div id="result" class="result-box hidden">
+            <p><strong>Brand:</strong> <span id="bandeiraResult"></span></p>
+            <p><strong>Validation:</strong> <span id="validationResult"></span></p>
+        </div>
+    </div>
+</section>
+
+</main>
+  
+<footer class="py-10 text-sm text-gray-500">© <span id="year"></span> Tomás Mota LLC. All Rights Reserved.</footer>
+  
+<script>
+// Footer year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Mobile menu
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+// Mobile contact dropdown menu
+const mobileContactBtn = document.getElementById('mobile-contact-btn');
+const mobileContactMenu = document.getElementById('mobile-contact-menu');
+if (mobileContactBtn && mobileContactMenu) {
+    mobileContactBtn.addEventListener('click', () => {
+        mobileContactMenu.style.display =
+            mobileContactMenu.style.display === 'block' ? 'none' : 'block';
+    });
+}
+
+// Mobile photography dropdown menu
+const mobilePhotoBtn = document.getElementById('mobile-photography-btn');
+const mobilePhotoMenu = document.getElementById('mobile-photography-menu');
+if (mobilePhotoBtn && mobilePhotoMenu) {
+    mobilePhotoBtn.addEventListener('click', () => {
+        mobilePhotoMenu.style.display =
+            mobilePhotoMenu.style.display === 'block' ? 'none' : 'block';
+    });
+}
+
+// **Credit Card Validator Logic (JavaScript)**
+
+// Regex patterns for each card brand
+const regexBandeiras = {
+    'Visa': /^4\d{15}$/,
+    'MasterCard': /^(5[1-5]\d{14}|222[1-9]\d{12}|22[3-9]\d{13}|2[3-6]\d{14}|27[01]\d{13}|2720\d{12})$/,
+    'American Express': /^3[47]\d{13}$/,
+    'Diners Club': /^3(?:0[0-5]|[68]\d)\d{11}$/,
+    'Discover': /^(6011\d{12}|65\d{14}|64[4-9]\d{13})$/,
+    'Enroute': /^2(014|149)\d{11}$/,
+    'JCB': /^(?:2131|1800|35\d{3})\d{11}$/,
+    'Voyage': /^50\d{14}$/,
+    'Hipercard': /^(606282\d{10}(\d{3})?|3841\d{15})$/,
+    'Aura': /^50(50|36|38|45|47|48)\d{10,13}$/
+};
+
+// Function to get the card brand
+function getCardBandeira(cardNumber) {
+    const num = cardNumber.replace(/\D/g, '');
+
+    for (const [bandeira, regex] of Object.entries(regexBandeiras)) {
+        if (regex.test(num)) {
+            return bandeira;
+        }
+    }
+    return 'Unknown Brand';
+}
+
+// Function to validate the credit card number (Luhn)
+function validateCreditCard(cardNumber) {
+    const num = cardNumber.replace(/\D/g, '');
+    let sum = 0;
+    let shouldDouble = false;
+
+    if (!/^\d{13,19}$/.test(num)) {
+        return 'Invalid card number';
+    }
+
+    for (let i = num.length - 1; i >= 0; i--) {
+        let digit = parseInt(num[i], 10);
+
+        if (shouldDouble) {
+            digit *= 2;
+            if (digit > 9) digit -= 9;
+        }
+
+        sum += digit;
+        shouldDouble = !shouldDouble;
+    }
+
+    return sum % 10 === 0 ? 'Valid Card' : 'Invalid Card';
+}
+
+// Function to get the results and display them on the page
+function validateAndDisplay() {
+    const cardNumberInput = document.getElementById('cardNumber');
+    const cardNumber = cardNumberInput.value;
+    const resultBox = document.getElementById('result');
+    const bandeiraSpan = document.getElementById('bandeiraResult');
+    const validationSpan = document.getElementById('validationResult');
+    
+    // Clear the input field
+    cardNumberInput.value = '';
+
+    // Get the results
+    const bandeira = getCardBandeira(cardNumber);
+    const validacao = validateCreditCard(cardNumber);
+
+    // Display the results
+    bandeiraSpan.textContent = bandeira;
+    validationSpan.textContent = validacao;
+
+    // Style the validation result
+    if (validacao === 'Valid Card') {
+        validationSpan.style.color = 'green';
+    } else {
+        validationSpan.style.color = 'var(--c-red)';
+    }
+
+    // Make the result box visible
+    resultBox.classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
