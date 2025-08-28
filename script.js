@@ -120,4 +120,3 @@ function validateAndDisplay() {
     // Make the result box visible
     resultBox.classList.remove('hidden');
 }
-</html>
